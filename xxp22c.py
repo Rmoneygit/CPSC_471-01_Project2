@@ -28,15 +28,15 @@ try:
     args = parser.parse_args()
 
 except ValueError:
-    print "Usage: ./Heartbeat.py [--port] N [--packetloss] N [-h/--help]"
+    print ("Usage: ./Heartbeat.py [--port] N [--packetloss] N [-h/--help]")
     exit()
 
     if args.port < 1024 or args.port > 65535:
-        print 'Invalid port number. Value must be within the range 1024-65535'
+        print ('Invalid port number. Value must be within the range 1024-65535')
         exit()
 
     if args.packetloss < 0 or args.packetloss > 100:
-        print 'Invalid value for packet loss percentage. Value must be in between 0 to 100'
+        print ('Invalid value for packet loss percentage. Value must be in between 0 to 100')
         exit()
     # Variable has to be initialized outside so as to be able to use everywhere in the program
     server_start = dt.datetime.now()
@@ -44,23 +44,23 @@ except ValueError:
     if args.port == 12000:
     # I have taken a default value and it is my headache to make sure it works
         def portassign():
-        """A function to make sure the server binds to a free port in case the user hasn't specified one on his own"""
-        flag = True
-        while flag:
-        try:
-            # Bind server to port
-            serverSocket.bind(('', args.port))
-            # Record the time at which the server started
-            server_start = dt.datetime.now()
-            print 'Serving on host at port', args.port,'with a packet loss simulation of',args.packetloss,'%'
-            flag = False
+        #A function to make sure the server binds to a free port in case the user hasn't specified one on his own
+            flag = True
+            while flag:
+                try:
+                # Bind server to port
+                    serverSocket.bind(('', args.port))
+                # Record the time at which the server started
+                    server_start = dt.datetime.now()
+                    print ('Serving on host at port', args.port,'with a packet loss simulation of',args.packetloss,'%')
+                    flag = False
 
-except IOError:
-            print 'Unsuccessful in binding server to port',args.port,'. Trying with another one..'
-            args.port += 1
+                except IOError:
+                    print ('Unsuccessful in binding server to port',args.port,'. Trying with another one..')
+                    args.port += 1
 
-        except OverflowError:
-            port = 1024
+                except OverflowError:
+                    port = 1024
 
         portassign()
 
@@ -71,10 +71,11 @@ except IOError:
             serverSocket.bind(('', args.port))
             # Record the time at which the server started
             server_start = dt.datetime.now()
-            print 'Serving on host at port', args.port,'with a packet loss simulation of',args.packetloss,'%'
+            print ('Serving on host at port'+ args.port+'with a packet loss simulation of'+args.packetloss+'%')
 
         except IOError:
             # The user has specified the port number.
             # We should allow him to specify an alternative rather than take matters into our own hands
-            print 'Cannot bind server to port',args.port,'. Try with another one'
+            print ('Cannot bind server to port'+args.port+'. Try with another one')
             exit()
+
